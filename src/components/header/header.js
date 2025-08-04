@@ -1,5 +1,5 @@
 import Link from "next/link";
-import classes from "./header.module.scss";
+import classes from "./header.module.css";
 import Social from "@/components/social/social";
 import Hamburger from "@/components/hamburger/hamburger";
 import Logotext from "../logotext/logotext";

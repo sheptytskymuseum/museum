@@ -1,8 +1,7 @@
-@use "../../styles/mixins.scss" as *;
-
 .footer {
-    @include y-paddings;
-    background-color: #484242; // TODO: change color
+    padding-top: 32px;
+    padding-bottom: 32px;
+    background-color: #484242; /* TODO: change color */
     color: var(--light-text);
 
     p {
@@ -54,7 +53,8 @@
 }
 
 .bottom_block {
-    @include y-paddings;
+    padding-top: 32px;
+    padding-bottom: 32px;
     border-top: 1px solid var(--light-gray);
 }
 

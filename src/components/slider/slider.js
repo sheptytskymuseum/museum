@@ -1,13 +1,17 @@
 "use client";
-import classes from "./slider.module.scss";
+import classes from "./slider.module.css";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 
 const images = [
-    "/images/image-1.jpg",
-    "/images/image-2.png",
-    "/images/image-3.png",
-    "/images/image-4.png",
+    // "/images/image-1.jpg",
+    // "/images/image-2.png",
+    // "/images/image-3.png",
+    // "/images/image-4.png",
+    "https://picsum.photos/200/400",
+    "https://picsum.photos/300/700",
+    "https://picsum.photos/400/900",
+    "https://picsum.photos/500/1000",
 ];
 
 export default function Slider() {

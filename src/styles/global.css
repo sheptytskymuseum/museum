@@ -1,4 +1,4 @@
-@import "./variables.scss";
+@import "./variables.css";
 
 @font-face {
     font-family: "Bebas Neue Book";
@@ -26,7 +26,6 @@ body {
 }
 
 main {
-    padding: 48px 0;
     min-height: 70vh;
 }
 
@@ -34,6 +33,7 @@ h1 {
     text-transform: uppercase;
     position: relative;
     margin-bottom: 56px;
+    margin-top: 48px;
     color: var(--dark);
     font-family: "Oswald", sans-serif;
     font-size: 36px;
@@ -71,5 +71,4 @@ a {
 
 p {
     font-size: 18px;
-    // color: var(--dark); // TODO: change
 }

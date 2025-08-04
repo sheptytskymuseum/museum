@@ -7,8 +7,8 @@ export default function Home() {
     return (
         <>
             <IntroSection />
-            <HistoryPreview />
-            {/* <EventsPreview /> */}
+            <EventsPreview />
+            {/* <HistoryPreview /> */}
             {/* <Partners /> */}
         </>
     );

@@ -1,6 +1,6 @@
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
-import "@/styles/global.scss";
+import "@/styles/global.css";
 import { Roboto, Nunito, Oswald } from "next/font/google";
 
 const roboto = Roboto({

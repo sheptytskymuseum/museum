@@ -1,3 +1,5 @@
+import classess from "./partners.module.css";
+
 export default function Partners() {
     return (
         <div>

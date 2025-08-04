@@ -1,3 +1,5 @@
+import classess from "./page.module.css";
+
 export default function Mission() {
     return (
         <div>

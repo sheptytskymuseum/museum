@@ -1,4 +1,4 @@
-import classes from "./social.module.scss";
+import classes from "./social.module.css";
 import Image from "next/image";
 import YouTubeIcon from "../../assets/youtube.svg";
 import FacebookIcon from "../../assets/facebook.svg";

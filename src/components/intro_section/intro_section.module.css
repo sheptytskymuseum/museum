@@ -1,0 +1,91 @@
+.main_wrap {
+    display: flex;
+}
+
+.logo {
+    width: 270px;
+    height: 270px;
+}
+
+.logo_wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    max-width: 600px;
+
+    h1 {
+        font-family: "Bebas Neue Book", sans-serif;
+        width: 280px;
+        font-size: 56px;
+        margin-top: 89px;
+        margin-left: 34px;
+        position: relative;
+        color: var(--dark-gray);
+    }
+
+    h1::before {
+        content: "";
+        background-color: var(--dark-gray);
+        position: absolute;
+        width: 3px;
+        height: 155px;
+        top: 0;
+        left: -19px;
+    }
+
+    span {
+        font-family: "Bebas Neue Bold", sans-serif;
+    }
+}
+
+@media (max-width: 1279px) {
+    .main_wrap {
+        flex-direction: column-reverse;
+    }
+
+    .logo_wrap {
+        margin: 46px auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo {
+        width: 188px;
+        height: 188px;
+    }
+
+    .logo_wrap {
+        margin: 16px auto;
+    }
+
+    .logo_wrap > h1 {
+        font-size: 38px;
+        width: 186px;
+        margin-top: 82px;
+    }
+
+    .logo_wrap > h1::before {
+        height: 108px;
+    }
+}
+
+@media (max-width: 481px) {
+    .logo {
+        width: 128px;
+        height: 128px;
+    }
+
+    .logo_wrap > h1 {
+        margin-left: 23px;
+        font-size: 25px;
+        width: 116px;
+        margin-top: 73px;
+    }
+
+    .logo_wrap > h1::before {
+        height: 71px;
+        left: -14px;
+    }
+}

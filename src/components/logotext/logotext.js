@@ -1,5 +1,5 @@
 import Link from "next/link";
-import classes from "./logotext.module.scss";
+import classes from "./logotext.module.css";
 
 export default function Logotext({}) {
     return (

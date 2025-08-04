@@ -1,4 +1,4 @@
-import classes from "./page.module.scss";
+import classes from "./page.module.css";
 export default function Contacts() {
     return (
         <div className={classes.wrap}>

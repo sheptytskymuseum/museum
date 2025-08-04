@@ -1,4 +1,4 @@
-import classes from "./history_preview.module.scss";
+import classes from "./history_preview.module.css";
 
 export default function HistoryPreview() {
     return (

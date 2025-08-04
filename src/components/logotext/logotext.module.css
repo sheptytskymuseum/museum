@@ -1,0 +1,31 @@
+.logo_text {
+    font-family: "Bebas Neue Book";
+    color: var(--light-text);
+    font-size: 22px;
+    width: 120px;
+    min-width: 120px;
+    padding: 0 8px;
+    position: relative;
+    min-height: 62px;
+    display: inline-block;
+}
+
+.logo_text:hover {
+    color: var(--white);
+    transition: color 0.3s ease-in-out;
+}
+
+.logo_text_bold {
+    font-family: "Bebas Neue Bold";
+}
+
+.logo_text::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0;
+    right: 0;
+    height: 64px;
+    width: 2px;
+    background-color: var(--light-text);
+}

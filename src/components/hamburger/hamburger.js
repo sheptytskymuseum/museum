@@ -1,6 +1,6 @@
 "use client";
 
-import classes from "./hamburger.module.scss";
+import classes from "./hamburger.module.css";
 import { useState } from "react";
 
 export default function Hamburger() {

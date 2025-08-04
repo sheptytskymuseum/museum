@@ -1,5 +1,5 @@
 import Image from "next/image";
-import classes from "./museum_image.module.scss";
+import classes from "./museum_image.module.css";
 
 export default function MuseumImage({ src }) {
     return (

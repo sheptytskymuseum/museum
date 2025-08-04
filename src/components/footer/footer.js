@@ -1,4 +1,4 @@
-import classes from "./footer.module.scss";
+import classes from "./footer.module.css";
 import Logotext from "../logotext/logotext";
 import Social from "../social/social";
 import Link from "next/link";
