@@ -1,0 +1,28 @@
+.wrap {
+    margin-bottom: 86px;
+
+    h2 {
+        text-align: center;
+    }
+}
+
+.partners_intro {
+    color: var(--dark-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 68px;
+}
+
+.image_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+}
+
+@media (max-width: 1269px) {
+    .image_container {
+        flex-direction: column;
+    }
+}

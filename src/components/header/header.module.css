@@ -10,10 +10,6 @@
 }
 
 .nav {
-    @media (max-width: 1279px) {
-        display: none;
-    }
-
     display: flex;
     gap: 32px;
     align-items: center;
@@ -53,5 +49,11 @@
         a:hover::before {
             background-color: var(--light-text);
         }
+    }
+}
+
+@media (max-width: 1279px) {
+    .nav {
+        display: none;
     }
 }

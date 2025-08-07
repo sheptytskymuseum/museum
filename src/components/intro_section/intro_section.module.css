@@ -1,5 +1,6 @@
 .main_wrap {
     display: flex;
+    margin-bottom: 48px;
 }
 
 .logo {
@@ -72,16 +73,8 @@
 }
 
 @media (max-width: 481px) {
-    .logo {
-        width: 128px;
-        height: 128px;
-    }
-
     .logo_wrap > h1 {
-        margin-left: 23px;
-        font-size: 25px;
-        width: 116px;
-        margin-top: 73px;
+        display: none;
     }
 
     .logo_wrap > h1::before {

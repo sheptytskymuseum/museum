@@ -1,3 +1,4 @@
+"use client";
 import classes from "./intro_section.module.css";
 import Image from "next/image";
 import Slider from "../slider/slider";
