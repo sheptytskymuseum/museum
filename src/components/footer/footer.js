@@ -37,8 +37,7 @@ export default function Footer({}) {
                     </div>
                 </div>
                 <div className={classes.bottom_block}>
-                    &copy; {new Date().getFullYear()} | Developed by Ivan
-                    Shpynda
+                    {new Date().getFullYear()} | &copy; All rights reserved
                 </div>
             </div>
         </div>

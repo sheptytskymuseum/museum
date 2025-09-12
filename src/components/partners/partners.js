@@ -1,5 +1,7 @@
+"use client";
 import classes from "./partners.module.css";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 export default function Partners() {
     return (
@@ -10,7 +12,15 @@ export default function Partners() {
                 збереження духовної спадщини та вшанування постаті Андрея
                 Шептицького.
             </p>
-            <div className={classes.image_container}>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.5, delay: 0.2 },
+                }}
+                className={classes.image_container}
+            >
                 <Image
                     src="images/lviv-region.png"
                     alt="partner-img"
@@ -35,7 +45,7 @@ export default function Partners() {
                     width={180}
                     height={230}
                 />
-            </div>
+            </motion.div>
         </div>
     );
 }

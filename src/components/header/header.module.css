@@ -23,6 +23,7 @@
 
     li {
         padding: 8px 16px;
+        position: relative;
 
         a {
             font-size: 16px;
@@ -35,21 +36,20 @@
             color: var(--white);
             transition: color 0.3s ease-in-out;
         }
-
-        a:before {
-            content: "";
-            position: absolute;
-            bottom: -6px;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary);
-            transition: background-color 0.3s ease;
-        }
-
-        a:hover::before {
-            background-color: var(--light-text);
-        }
     }
+}
+
+.item_underline {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--light-text);
+}
+
+.item_underline:hover {
+    background-color: var(--white);
 }
 
 @media (max-width: 1279px) {

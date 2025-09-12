@@ -2,11 +2,12 @@
 import classes from "./slider.module.css";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { delay, motion } from "motion/react";
 
 const images = [
-    "/images/image-1.jpg",
-    "/images/image-2.png",
     "/images/image-3.png",
+    "/images/image-1.png",
+    "/images/image-2.png",
     "/images/image-4.png",
 ];
 
@@ -29,10 +30,19 @@ export default function Slider() {
             clearInterval(interval.current);
             clearTimeout(fadeTimeout.current);
         };
-    }, [images.length]);
+    }, []);
 
     return (
-        <div className={classes.frame}>
+        <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{
+                opacity: 1,
+                x: 0,
+                transition: { duration: 0.5 },
+            }}
+            exit={{ opacity: 0, transition: { duration: 0.5 } }}
+            className={classes.frame}
+        >
             <div className={classes.image_container}>
                 <Image
                     src={images[current]}
@@ -45,6 +55,6 @@ export default function Slider() {
                     priority
                 />
             </div>
-        </div>
+        </motion.div>
     );
 }

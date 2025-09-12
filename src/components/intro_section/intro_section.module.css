@@ -1,6 +1,6 @@
 .main_wrap {
     display: flex;
-    margin-bottom: 48px;
+    margin-bottom: 148px;
 }
 
 .logo {
@@ -14,6 +14,7 @@
     align-items: center;
     width: 50%;
     max-width: 600px;
+    margin-top: 68px;
 
     h1 {
         font-family: "Bebas Neue Book", sans-serif;

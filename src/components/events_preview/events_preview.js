@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./events_preview.module.css";
 import ArrowIcon from "../../assets/arrow.svg";
+import { motion } from "motion/react";
+import formatISOToDDMMYYYY from "@/utils/formatDate";
 
 const articlesData = [
     {
@@ -44,25 +47,21 @@ function limitText(text, limit) {
     return words.slice(0, limit).join(" ") + "...";
 }
 
-function formatISOToDDMMYYYY(isoString) {
-    const date = new Date(isoString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
-}
-
 export default function EventsPreview({}) {
     return (
         <div className={classes.wrap}>
-            <h2 className={classes.title}>Актуальні події</h2>
+            <h2 className={classes.title}>Виставки та події</h2>
             <div className={classes.link_wrap}>
                 <Link href="/events" className={classes.link}>
                     Дізнатись більше
                 </Link>
                 <ArrowIcon className={classes.arrow} />
             </div>
-            <div className={classes.grid}>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0, duration: 0.5, delay: 0.2 }}
+                className={classes.grid}
+            >
                 {articlesData.map((data, i) => (
                     <Link
                         href="events"
@@ -92,7 +91,7 @@ export default function EventsPreview({}) {
                         </div>
                     </Link>
                 ))}
-            </div>
+            </motion.div>
         </div>
     );
 }

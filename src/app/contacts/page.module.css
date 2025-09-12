@@ -1,5 +1,6 @@
-.wrap {
+.text_wrap {
     p {
-        margin-bottom: 12px;
+        margin-bottom: 18px;
     }
+    margin: 48px 0;
 }

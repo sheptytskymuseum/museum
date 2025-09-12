@@ -1,10 +1,11 @@
 import classes from "./page.module.css";
+import PageWrapper from "@/components/page_wrapper/page_wrapper";
 
 export default function History() {
     return (
-        <div>
-            {/* <Wrapper> */}
-            <h1>Історія Музею</h1>
+        <PageWrapper>
+            <h1>Про нас</h1>
+            <h2>Історія музею</h2>
             <p className={classes.text}>
                 У 1630 р. на цьому місці був деревʼяний монастир й рівночасно
                 деревʼяний костел під назвою св. мчч. Роха і Себастьяна.
@@ -54,7 +55,8 @@ export default function History() {
                 сучасніше й більш осмислено говорити про його роль у духовному,
                 культурному й національному житті України.
             </p>
-            {/* </Wrapper> */}
-        </div>
+            <h2>Місія</h2>
+            <p>про місію...</p>
+        </PageWrapper>
     );
 }

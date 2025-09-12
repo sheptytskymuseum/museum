@@ -2,11 +2,20 @@
 import classes from "./intro_section.module.css";
 import Image from "next/image";
 import Slider from "../slider/slider";
+import { motion } from "motion/react";
 
 export default function IntroSection() {
     return (
         <div className={`container ${classes.main_wrap}`}>
-            <div className={classes.logo_wrap}>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{
+                    opacity: 1,
+                    transition: { duration: 0.5 },
+                }}
+                exit={{ opacity: 0, transition: { duration: 0.5 } }}
+                className={classes.logo_wrap}
+            >
                 <Image
                     src="/images/logo.png"
                     alt="logo-img"
@@ -14,10 +23,11 @@ export default function IntroSection() {
                     width={270}
                     height={270}
                 />
+
                 <h1>
                     МУЗЕЙ ПАМʼЯТI МИТРОПОЛИТА <span>АНДРЕЯ</span>
                 </h1>
-            </div>
+            </motion.div>
             <Slider />
         </div>
     );
