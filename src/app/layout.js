@@ -1,5 +1,6 @@
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
+import AuthProvider from "@/components/auth_provider/auth_provider";
 import "@/styles/global.css";
 import { Roboto, Nunito, Oswald } from "next/font/google";
 
@@ -32,9 +33,11 @@ export default function RootLayout({ children }) {
             <body
                 className={`${roboto.variable} ${nunito.variable} ${oswald.variable}`}
             >
-                <Header />
-                <main className="container">{children}</main>
-                <Footer />
+                <AuthProvider>
+                    <Header />
+                    <main className="container">{children}</main>
+                    <Footer />
+                </AuthProvider>
             </body>
         </html>
     );

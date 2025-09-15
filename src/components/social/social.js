@@ -1,7 +1,7 @@
 import classes from "./social.module.css";
-import Image from "next/image";
-import YouTubeIcon from "../../assets/youtube.svg";
-import FacebookIcon from "../../assets/facebook.svg";
+import YouTubeIcon from "@/assets/youtube.svg";
+import FacebookIcon from "@/assets/facebook.svg";
+
 export default function Social() {
     return (
         <div className={classes.wrap}>

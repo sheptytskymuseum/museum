@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import classes from "./page.module.css";
 import PageWrapper from "@/components/page_wrapper/page_wrapper";
 import Image from "next/image";
 import formatISOToDDMMYYYY from "@/utils/formatDate";
 import ArrowIcon from "../../assets/arrow.svg";
+import { useAuth } from "@/hooks/useAuth";
+import EditIcon from "@/assets/edit.svg";
 
+// Sample data for events
 const articlesData = [
     {
         id: "1",
@@ -41,9 +46,24 @@ const articlesData = [
 ];
 
 export default function Events() {
+    const { isAuthenticated } = useAuth();
     return (
         <PageWrapper>
             <h1>Виставки та події</h1>
+            {isAuthenticated && (
+                <div className={classes.top_info}>
+                    <p>
+                        Загальна кількість подій:{" "}
+                        <span className={classes.event_count}>
+                            {articlesData.length}
+                        </span>
+                    </p>
+                    <Link href="/create" className={classes.create_event}>
+                        Створити подію
+                    </Link>
+                </div>
+            )}
+            <div className={classes.divider}></div>
             {articlesData.map((event) => (
                 <div key={event.id} className={classes.event_wrap}>
                     <Image
@@ -53,15 +73,27 @@ export default function Events() {
                         width={400}
                         height={300}
                     />
-                    <div>
-                        <h3 className={classes.event_title}>{event.title}</h3>
-                        <p className={classes.event_text}>{event.text}</p>
+                    <div className={classes.about_event}>
+                        <div>
+                            <h3 className={classes.event_title}>
+                                {event.title}
+                            </h3>
+                            <p className={classes.event_text}>{event.text}</p>
+                        </div>
                         <div className={classes.event_bottom}>
-                            <span>
+                            <span className={classes.event_date}>
                                 {formatISOToDDMMYYYY(event.startDate)} -{" "}
                                 {formatISOToDDMMYYYY(event.endDate)}
                             </span>
                             <div className={classes.link_wrap}>
+                                {isAuthenticated && (
+                                    <div className={classes.edit_link}>
+                                        <Link href="qwe">Редагувати</Link>{" "}
+                                        <EditIcon
+                                            className={classes.edit_icon}
+                                        />
+                                    </div>
+                                )}
                                 <Link href="qwe">Читати більше</Link>
                                 <ArrowIcon className={classes.arrow_icon} />
                             </div>
@@ -69,7 +101,6 @@ export default function Events() {
                     </div>
                 </div>
             ))}
-            <Link href="events/event-1">Test Link to Event 1</Link>
         </PageWrapper>
     );
 }
