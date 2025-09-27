@@ -2,13 +2,7 @@ import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import AuthProvider from "@/components/auth_provider/auth_provider";
 import "@/styles/global.css";
-import { Roboto, Nunito, Oswald } from "next/font/google";
-
-const roboto = Roboto({
-    subsets: ["cyrillic"],
-    weight: ["400", "700"],
-    variable: "--font-roboto",
-});
+import { Nunito, Oswald } from "next/font/google";
 
 const nunito = Nunito({
     subsets: ["cyrillic"],
@@ -30,9 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="uk">
-            <body
-                className={`${roboto.variable} ${nunito.variable} ${oswald.variable}`}
-            >
+            <body className={`${nunito.variable} ${oswald.variable}`}>
                 <AuthProvider>
                     <Header />
                     <main className="container">{children}</main>

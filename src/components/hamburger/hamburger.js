@@ -1,5 +1,3 @@
-"use client";
-
 import classes from "./hamburger.module.css";
 
 export default function Hamburger({ isOpen, onToggle }) {

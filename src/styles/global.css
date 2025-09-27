@@ -49,7 +49,6 @@ h1::before {
 }
 
 h2 {
-    font-family: "Roboto", sans-serif;
     font-size: 28px;
     font-weight: 400;
     margin: 16px 0;
@@ -59,7 +58,10 @@ h2 {
 
 a {
     text-decoration: none;
-    font-family: "Roboto", sans-serif;
+}
+
+p {
+    font-size: 18px;
 }
 
 .container {
@@ -67,8 +69,4 @@ a {
     max-width: 1220px;
     padding-left: 16px;
     padding-right: 16px;
-}
-
-p {
-    font-size: 18px;
 }
