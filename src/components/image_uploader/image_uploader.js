@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import useEventStore from "@/store/event_store";
 import { compressImage } from "@/utils/compressImage";
 import styles from "./image_uploader.module.css";
+import Image from "next/image";
 
 const MAX_IMAGES = 20;
 const ACCEPTED_TYPES = ["image/jpeg", "image/png"];
@@ -181,9 +182,11 @@ export default function ImageUploader({ disabled = false }) {
                 <div className={styles.preview_grid}>
                     {images.map((image) => (
                         <div key={image.id} className={styles.preview_item}>
-                            <img
+                            <Image
                                 src={image.preview}
                                 alt={image.name}
+                                width={300}
+                                height={200}
                                 className={styles.preview_img}
                             />
                             <button

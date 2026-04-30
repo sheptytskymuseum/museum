@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import useEventStore from "@/store/event_store";
 import { compressImage } from "@/utils/compressImage";
 import styles from "./main_image_uploader.module.css";
+import Image from "next/image";
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png"];
 
@@ -74,9 +75,11 @@ export default function MainImageUploader({ disabled = false }) {
     if (mainImage) {
         return (
             <div className={styles.preview_wrap}>
-                <img
+                <Image
                     src={mainImage.preview}
                     alt="main"
+                    width={300}
+                    height={200}
                     className={styles.preview_img}
                 />
                 <button
@@ -138,7 +141,9 @@ export default function MainImageUploader({ disabled = false }) {
                         </button>
                     </>
                 )}
-                <p className={styles.hint}>PNG, JPG &nbsp;·&nbsp; 1 зображення</p>
+                <p className={styles.hint}>
+                    PNG, JPG &nbsp;·&nbsp; 1 зображення
+                </p>
                 <input
                     ref={fileInputRef}
                     type="file"
