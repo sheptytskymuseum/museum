@@ -2,8 +2,6 @@
 
 const nextConfig = {
     basePath: "",
-    output: "standalone",
-    distDir: "dist",
     images: {
         unoptimized: true,
     },
