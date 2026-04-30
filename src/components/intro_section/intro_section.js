@@ -25,7 +25,7 @@ export default function IntroSection() {
                 />
 
                 <h1>
-                    МУЗЕЙ ПАМʼЯТI МИТРОПОЛИТА <span>АНДРЕЯ</span>
+                    МУЗЕЙ МИТРОПОЛИТА <span>АНДРЕЯ</span>
                 </h1>
             </motion.div>
             <Slider />

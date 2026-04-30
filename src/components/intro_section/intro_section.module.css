@@ -1,6 +1,8 @@
 .main_wrap {
     display: flex;
+    align-items: center;
     margin-bottom: 148px;
+    min-height: 80vh;
 }
 
 .logo {

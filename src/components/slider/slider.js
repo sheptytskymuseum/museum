@@ -6,9 +6,9 @@ import { delay, motion } from "motion/react";
 
 const images = [
     "/images/image-3.png",
-    "/images/image-1.png",
-    "/images/image-2.png",
-    "/images/image-4.png",
+    "/images/sheptycki-1.jpg",
+    "/images/sheptycki-2.jpg",
+    "/images/sheptycki-3.jpg",
 ];
 
 export default function Slider() {

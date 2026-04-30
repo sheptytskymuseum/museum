@@ -1,0 +1,102 @@
+.editor_wrapper {
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+    background: #fff;
+}
+
+.editor_wrapper:focus-within {
+    border-color: var(--medium-gray);
+}
+
+.editor_wrapper.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--light-gray, #e5e5e5);
+    background: #fafafa;
+}
+
+.toolbar_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--medium-gray, #666);
+    font-size: 14px;
+    font-family: inherit;
+    transition: background 0.15s ease, color 0.15s ease;
+    border-radius: 2px;
+}
+
+.toolbar_btn:hover {
+    background: var(--light-gray, #e5e5e5);
+    color: var(--primary, #333);
+}
+
+.toolbar_btn.active {
+    background: var(--medium-gray, #666);
+    color: #fff;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background: var(--light-gray, #e5e5e5);
+    margin: 0 4px;
+}
+
+.editor_content {
+    padding: 14px 16px;
+    min-height: 200px;
+    font-size: 16px;
+    font-family: "Nunito", sans-serif;
+    cursor: text;
+}
+
+/* Tiptap ProseMirror styles */
+.editor_content :global(.ProseMirror) {
+    outline: none;
+    min-height: 180px;
+}
+
+.editor_content :global(.ProseMirror p) {
+    margin: 0 0 0.75em;
+    line-height: 1.6;
+}
+
+.editor_content :global(.ProseMirror p:last-child) {
+    margin-bottom: 0;
+}
+
+.editor_content :global(.ProseMirror ul) {
+    padding-left: 1.4em;
+    margin: 0 0 0.75em;
+}
+
+.editor_content :global(.ProseMirror li) {
+    line-height: 1.6;
+    margin-bottom: 0.25em;
+}
+
+.editor_content :global(.ProseMirror strong) {
+    font-weight: 700;
+}
+
+/* Placeholder */
+.editor_content :global(.ProseMirror p.is-editor-empty:first-child::before) {
+    content: attr(data-placeholder);
+    float: left;
+    color: #aaa;
+    pointer-events: none;
+    height: 0;
+}

@@ -41,88 +41,116 @@
     height: 22px;
 }
 
+/* ── Grid ── */
 .grid {
     display: grid;
-    gap: 32px;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: repeat(3, auto);
+    column-gap: 40px;
 }
 
+/* ── Base card (small cards – right column) ── */
 .event_card {
     display: flex;
+    flex-direction: row;
     gap: 16px;
     border-bottom: 1px solid var(--light-gray);
-    padding-bottom: 16px;
+    padding-bottom: 20px;
+    padding-top: 20px;
     font-family: "Nunito", sans-serif;
 
     img {
+        flex-shrink: 0;
+        width: 160px;
+        height: 110px;
+        object-fit: cover;
         transition: opacity 0.3s ease;
-        height: 150px;
-        width: 240px;
     }
 }
 
-.event_card:hover {
-    img {
-        opacity: 0.8;
-    }
-
-    p {
-        color: var(--dark);
-    }
-}
-
-.event_card:first-child {
-    flex-direction: column;
-    grid-row: 1 / 4;
-    grid-column: 1 / 2;
+.event_card:last-child {
     border-bottom: none;
+}
+
+.event_card:hover img {
+    opacity: 0.8;
+}
+
+.event_card:hover p {
+    color: var(--dark);
+}
+
+/* ── First card – left column, full height ── */
+.event_card:first-child {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    flex-direction: column;
+    border-bottom: none;
+    padding-right: 40px;
+    padding-top: 0;
+    padding-bottom: 0;
 
     img {
         width: 100%;
-        height: 400px;
+        height: 380px;
+        object-fit: cover;
     }
 }
 
+/* ── Small card title ── */
 .event_title {
     font-size: 24px;
     color: var(--primary);
     margin-bottom: 8px;
 }
 
+.event_card:not(:first-child) .event_title {
+    font-size: 17px;
+}
+
 .event_text {
     color: var(--dark-gray);
     line-height: 1.4;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .event_date {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--dark-gray);
     font-style: italic;
 }
 
+/* ── Responsive ── */
 @media (max-width: 1279px) {
     .grid {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        column-gap: 0;
     }
 
     .event_card:first-child {
+        grid-column: auto;
+        grid-row: auto;
+        border-right: none;
         border-bottom: 1px solid var(--light-gray);
+        padding-right: 0;
+        padding-bottom: 20px;
 
         img {
-            height: 150px;
             width: 240px;
+            height: 150px;
         }
     }
 }
 
-@media (max-width: 481px) {
-    .event_card {
-        flex-direction: column;
-    }
-
+@media (max-width: 540px) {
+    .event_card,
     .event_card:first-child {
         flex-direction: column;
+
+        img {
+            width: 100%;
+            height: 200px;
+        }
     }
 }

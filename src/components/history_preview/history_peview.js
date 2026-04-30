@@ -21,19 +21,13 @@ export default function HistoryPreview() {
                     Дізнатись більше
                 </Link>
             </div>
-            <motion.div
-                initial={{ opacity: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                whileInView={{ opacity: 1 }}
-            >
-                <Image
-                    src="/images/museum2.png"
-                    alt="museum-img"
-                    className={classes.bottom_image}
-                    width={300}
-                    height={200}
-                />
-            </motion.div>
+            <Image
+                src="/images/museum2.png"
+                alt="museum-img"
+                className={classes.bottom_image}
+                width={300}
+                height={200}
+            />
         </div>
     );
 }

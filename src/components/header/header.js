@@ -53,7 +53,8 @@ export default function Navbar() {
         <>
             <header className={classes.header}>
                 <div className={`container ${classes.wrapper}`}>
-                    <Logotext />
+                    <Logotext isALink={!isHamburgerOpen} />
+
                     <nav className={classes.nav}>
                         <ul>
                             {links.map((link) => (
