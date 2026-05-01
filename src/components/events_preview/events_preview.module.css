@@ -36,6 +36,10 @@
     transition: all 0.5s ease-in-out;
 }
 
+.image {
+    border-radius: 8px;
+}
+
 .arrow {
     width: 22px;
     height: 22px;
@@ -66,6 +70,10 @@
         object-fit: cover;
         transition: opacity 0.3s ease;
     }
+}
+
+.event_card:nth-child(2) {
+    padding-top: 0;
 }
 
 .event_card:last-child {

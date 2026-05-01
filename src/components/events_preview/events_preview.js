@@ -71,14 +71,23 @@ export default function EventsPreview() {
                                 alt="event-img"
                                 width={300}
                                 height={200}
+                                className={classes.image}
                             />
                         )}
                         <div>
-                            <h3 className={classes.event_title}>{event.title}</h3>
+                            <h3 className={classes.event_title}>
+                                {event.title}
+                            </h3>
                             <p className={classes.event_text}>
                                 {i === 0
-                                    ? limitText(stripHtml(event.description), 60)
-                                    : limitText(stripHtml(event.description), 15)}
+                                    ? limitText(
+                                          stripHtml(event.description),
+                                          60,
+                                      )
+                                    : limitText(
+                                          stripHtml(event.description),
+                                          15,
+                                      )}
                             </p>
                             <p className={classes.event_date}>
                                 {formatTimestamp(event.start_date)}

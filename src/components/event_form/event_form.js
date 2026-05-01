@@ -29,8 +29,12 @@ export default function EventForm({
 }) {
     const [formData, setFormData] = useState({
         title: initialTitle,
-        start_date: initialDateRange[0] ? Timestamp.fromDate(initialDateRange[0]) : "",
-        end_date: initialDateRange[1] ? Timestamp.fromDate(initialDateRange[1]) : "",
+        start_date: initialDateRange[0]
+            ? Timestamp.fromDate(initialDateRange[0])
+            : "",
+        end_date: initialDateRange[1]
+            ? Timestamp.fromDate(initialDateRange[1])
+            : "",
     });
     const [dateRange, setDateRange] = useState(initialDateRange);
     const [startDate, endDate] = dateRange;
@@ -55,7 +59,11 @@ export default function EventForm({
         setError("");
 
         const descriptionText = description.replace(/<[^>]*>/g, "").trim();
-        if (!formData.title.trim() || !descriptionText || !formData.start_date) {
+        if (
+            !formData.title.trim() ||
+            !descriptionText ||
+            !formData.start_date
+        ) {
             setError("Будь ласка, заповніть всі обов'язкові поля");
             return;
         }
@@ -63,7 +71,9 @@ export default function EventForm({
         setIsSubmitting(true);
 
         try {
-            const targetId = isEdit ? eventId : doc(collection(firestore, "events")).id;
+            const targetId = isEdit
+                ? eventId
+                : doc(collection(firestore, "events")).id;
             const docRef = doc(firestore, "events", targetId);
 
             let mainImageUrl = null;
@@ -80,7 +90,10 @@ export default function EventForm({
             const imageUrls = await Promise.all(
                 images.map(async (img) => {
                     if (img.isExisting) return img.url;
-                    const storageRef = ref(storage, `events/${targetId}/${img.id}`);
+                    const storageRef = ref(
+                        storage,
+                        `events/${targetId}/${img.id}`,
+                    );
                     await uploadBytes(storageRef, img.file);
                     return getDownloadURL(storageRef);
                 }),
@@ -147,7 +160,10 @@ export default function EventForm({
 
             <div className={styles.form_group}>
                 <label className={styles.label}>Опис події *</label>
-                <RichTextEditor initialContent={initialDescription} disabled={isSubmitting} />
+                <RichTextEditor
+                    initialContent={initialDescription}
+                    disabled={isSubmitting}
+                />
             </div>
 
             <div className={styles.form_group}>
@@ -160,12 +176,16 @@ export default function EventForm({
                         setDateRange(update);
                         setFormData((prev) => ({
                             ...prev,
-                            start_date: update[0] ? Timestamp.fromDate(update[0]) : "",
-                            end_date: update[1] ? Timestamp.fromDate(update[1]) : "",
+                            start_date: update[0]
+                                ? Timestamp.fromDate(update[0])
+                                : "",
+                            end_date: update[1]
+                                ? Timestamp.fromDate(update[1])
+                                : "",
                         }));
                     }}
                     isClearable={true}
-                    className={styles.input}
+                    className={`${styles.input} ${styles.datepicker}`}
                     placeholderText="Виберіть дату"
                     dateFormat="dd/MM/yyyy"
                     disabled={isSubmitting}
@@ -202,8 +222,12 @@ export default function EventForm({
                     }
                 >
                     {isSubmitting
-                        ? isEdit ? "Збереження..." : "Створення..."
-                        : isEdit ? "Зберегти зміни" : "Створити подію"}
+                        ? isEdit
+                            ? "Збереження..."
+                            : "Створення..."
+                        : isEdit
+                          ? "Зберегти зміни"
+                          : "Створити подію"}
                 </button>
             </div>
         </form>
