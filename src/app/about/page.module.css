@@ -1,4 +1,36 @@
-.text {
-    margin: 32px 0;
-    line-height: 1.4;
+.article {
+    max-width: 860px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 32px;
+    line-height: 1.2;
+}
+
+.content {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--dark);
+}
+
+.content p {
+    margin-bottom: 16px;
+}
+
+.content h2,
+.content h3 {
+    color: var(--primary);
+    margin: 24px 0 12px;
+}
+
+.content ul,
+.content ol {
+    padding-left: 24px;
+    margin-bottom: 16px;
+}
+
+.content li {
+    margin-bottom: 6px;
 }
