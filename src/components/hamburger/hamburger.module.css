@@ -8,6 +8,7 @@
         gap: 6px;
         width: 50px;
         height: 50px;
+        margin-left: auto;
     }
 }
 
@@ -18,7 +19,7 @@
     & > div {
         height: 4px;
         width: 100%;
-        background-color: var(--light-text);
+        background-color: var(--dark);
         border-radius: 3px;
     }
 
@@ -40,7 +41,7 @@
     & > div:nth-child(2)::before {
         content: "";
         position: absolute;
-        background-color: var(--light-text);
+        background-color: var(--dark);
         border-radius: 3px;
         top: 0;
         left: 0;

@@ -2,6 +2,12 @@ import classes from "./page.module.css";
 import PageWrapper from "@/components/page_wrapper/page_wrapper";
 import MyMap from "@/components/map/map";
 
+export const metadata = {
+    title: "Контакти",
+    description:
+        "Контакти Музею митрополита Андрея Шептицького: адреса, телефон та email у Львові.",
+};
+
 export default function Contacts() {
     return (
         <PageWrapper>

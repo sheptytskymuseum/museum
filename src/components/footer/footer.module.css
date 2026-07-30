@@ -1,70 +1,71 @@
 .footer {
-    padding-top: 32px;
-    padding-bottom: 32px;
-    background-color: #484242; /* TODO: change color */
-    color: var(--light-text);
-
-    p {
-        font-size: 16px;
-    }
-
-    ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    li {
-        a {
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--light-text);
-            position: relative;
-        }
-
-        a:hover {
-            color: var(--white);
-            transition: color 0.3s ease-in-out;
-        }
-    }
+    background-color: var(--dark);
+    color: var(--light-background);
+    padding: 80px 32px 32px;
 }
 
-.main_block {
-    padding: 32px 0 64px;
+.inner {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.top_row {
     display: flex;
     justify-content: space-between;
-    gap: 24px;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: center;
-        gap: 64px;
-    }
-
-    & > div,
-    & > ul {
-        width: 30%;
-
-        @media (max-width: 768px) {
-            width: 100%;
-        }
-    }
-}
-
-.bottom_block {
-    padding-top: 32px;
-    padding-bottom: 32px;
-    border-top: 1px solid var(--light-gray);
+    gap: 48px;
+    flex-wrap: wrap;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--border-dark);
 }
 
 .info_block {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
+    max-width: 320px;
 }
 
-.footer_text {
-    line-height: 2;
-    margin-bottom: 16px;
+.address {
+    font-size: 15px;
+    color: var(--light-text);
+    line-height: 1.8;
+}
+
+.nav_list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+
+    a {
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--light-text);
+    }
+
+    a:hover {
+        color: var(--white);
+        transition: color 0.3s ease-in-out;
+    }
+}
+
+.bottom_row {
+    padding-top: 32px;
+    font-size: 13px;
+    color: var(--muted-footer);
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 56px 20px 24px;
+    }
+
+    .top_row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+    }
 }

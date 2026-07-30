@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 
 export default function IntroSection() {
     return (
-        <div className={`container ${classes.main_wrap}`}>
+        <div id="hero" className={`container ${classes.main_wrap}`}>
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{

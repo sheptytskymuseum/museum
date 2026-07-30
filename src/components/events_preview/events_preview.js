@@ -1,12 +1,10 @@
-"use client";
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./events_preview.module.css";
 import ArrowIcon from "../../assets/arrow.svg";
 import formatISOToDDMMYYYY from "@/utils/formatDate";
-import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
-import { firestore } from "@/firebase";
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore/lite";
+import { firestoreServer } from "@/firebase-server";
 
 function limitText(text, wordLimit) {
     const words = text.split(/\s+/);
@@ -24,81 +22,77 @@ function formatTimestamp(timestamp) {
     return formatISOToDDMMYYYY(date.toISOString());
 }
 
-export default function EventsPreview() {
-    const [events, setEvents] = useState([]);
-
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const q = query(
-                    collection(firestore, "events"),
-                    orderBy("createdAt", "desc"),
-                    limit(4),
-                );
-                const snapshot = await getDocs(q);
-                const data = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setEvents(data);
-            } catch (err) {
-                console.error("Error fetching events:", err);
-            }
-        };
-
-        fetchEvents();
-    }, []);
+export default async function EventsPreview() {
+    let events = [];
+    try {
+        const q = query(
+            collection(firestoreServer, "events"),
+            orderBy("createdAt", "desc"),
+            limit(4),
+        );
+        const snapshot = await getDocs(q);
+        events = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+    } catch (err) {
+        console.error("Error fetching events:", err);
+    }
 
     return (
-        <div className={classes.wrap}>
-            <h2 className={classes.title}>Виставки та події</h2>
-            <div className={classes.link_wrap}>
-                <Link href="/events" className={classes.link}>
-                    Дізнатись більше
-                </Link>
-                <ArrowIcon className={classes.arrow} />
-            </div>
-            <div className={classes.grid}>
-                {events.map((event, i) => (
-                    <Link
-                        href={`/events/${event.id}`}
-                        className={classes.event_card}
-                        key={event.id}
-                    >
-                        {event.images?.[0] && (
-                            <Image
-                                src={event.images[0]}
-                                alt="event-img"
-                                width={300}
-                                height={200}
-                                className={classes.image}
-                            />
-                        )}
-                        <div>
-                            <h3 className={classes.event_title}>
-                                {event.title}
-                            </h3>
-                            <p className={classes.event_text}>
-                                {i === 0
-                                    ? limitText(
-                                          stripHtml(event.description),
-                                          60,
-                                      )
-                                    : limitText(
-                                          stripHtml(event.description),
-                                          15,
-                                      )}
-                            </p>
-                            <p className={classes.event_date}>
-                                {formatTimestamp(event.start_date)}
-                                {event.end_date && (
-                                    <> - {formatTimestamp(event.end_date)}</>
-                                )}
-                            </p>
-                        </div>
+        <section className={`full-bleed ${classes.wrap}`}>
+            <div className={classes.inner}>
+                <div className={classes.header_row}>
+                    <h2 className={classes.title}>Виставки та події</h2>
+                    <Link href="/events" className={classes.link}>
+                        Усі події
+                        <ArrowIcon className={classes.arrow} />
                     </Link>
-                ))}
+                </div>
+                <div className={classes.list}>
+                    {events.map((event, i) => (
+                        <Link
+                            href={`/events/${event.id}`}
+                            className={classes.row}
+                            key={event.id}
+                        >
+                            <div className={classes.index}>
+                                {String(i + 1).padStart(2, "0")}
+                            </div>
+                            {event.images?.[0] && (
+                                <Image
+                                    src={event.images[0]}
+                                    alt="event-img"
+                                    width={220}
+                                    height={140}
+                                    className={classes.image}
+                                />
+                            )}
+                            <div>
+                                <h3 className={classes.event_title}>
+                                    {event.title}
+                                </h3>
+                                <p className={classes.event_text}>
+                                    {limitText(
+                                        stripHtml(event.description),
+                                        24,
+                                    )}
+                                </p>
+                                <p className={classes.event_date}>
+                                    {formatTimestamp(event.start_date)}
+                                    {event.end_date && (
+                                        <>
+                                            {" "}
+                                            —{" "}
+                                            {formatTimestamp(event.end_date)}
+                                        </>
+                                    )}
+                                </p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             </div>
-        </div>
+        </section>
     );
 }

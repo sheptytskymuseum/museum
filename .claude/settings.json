@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3001/ | grep -o '<meta property=\"og:image\"[^>]*>' *)",
+      "Read(//tmp/**)",
+      "Bash(timeout 90 npm install --no-save playwright)",
+      "Bash(npm install *)",
+      "Bash(npx playwright *)",
+      "Bash(node /private/tmp/claude-501/-Users-ian-shp-projects-museum/f4b549d7-415c-412a-b9d6-7fa725553d0c/scratchpad/check_logotext.js)",
+      "Bash(node /Users/ian_shp/projects/museum/_pw_check.js)",
+      "Bash(node /Users/ian_shp/projects/museum/_pw_check2.js)",
+      "Bash(lsof -ti:3000 -sTCP:LISTEN)",
+      "Bash(xargs -r kill)",
+      "Bash(npm uninstall *)",
+      "Bash(rm -f /tmp/v2_*.png /tmp/next-dev.log /tmp/pw_install.log /tmp/pw_browser.log /tmp/pw_uninstall.log)",
+      "Bash(node /Users/ian_shp/projects/museum/_pw_check3.js)",
+      "Bash(rm -f /Users/ian_shp/projects/museum/_pw_check3.js *)",
+      "Bash(node /Users/ian_shp/projects/museum/_pw_check4.js)",
+      "Bash(rm -f /Users/ian_shp/projects/museum/_pw_check4.js *)",
+      "Bash(node /Users/ian_shp/projects/museum/_pw_check5.js)",
+      "Bash(rm -f /Users/ian_shp/projects/museum/_pw_check5.js *)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}

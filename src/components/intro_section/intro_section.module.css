@@ -44,10 +44,6 @@
 }
 
 @media (max-width: 1279px) {
-    .main_wrap {
-        flex-direction: column-reverse;
-    }
-
     .logo_wrap {
         margin: 46px auto;
         width: 100%;
@@ -55,6 +51,10 @@
 }
 
 @media (max-width: 768px) {
+    .main_wrap {
+        margin-bottom: 0;
+    }
+
     .logo {
         width: 188px;
         height: 188px;
@@ -62,26 +62,16 @@
 
     .logo_wrap {
         margin: 16px auto;
+        flex-direction: column;
     }
 
     .logo_wrap > h1 {
         font-size: 38px;
         width: 186px;
-        margin-top: 82px;
+        margin-top: 32px;
     }
 
     .logo_wrap > h1::before {
-        height: 108px;
-    }
-}
-
-@media (max-width: 481px) {
-    .logo_wrap > h1 {
         display: none;
-    }
-
-    .logo_wrap > h1::before {
-        height: 71px;
-        left: -14px;
     }
 }

@@ -1,16 +1,10 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { doc, getDoc } from "firebase/firestore";
-import { firestore } from "@/firebase";
+import { notFound } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import PageWrapper from "@/components/page_wrapper/page_wrapper";
+import EventAdminActions from "@/components/event_admin_actions/event_admin_actions";
+import EventGallery from "@/components/event_gallery/event_gallery";
 import formatISOToDDMMYYYY from "@/utils/formatDate";
-import { useAuth } from "@/hooks/useAuth";
-import EditIcon from "@/assets/edit.svg";
-import ArrowIcon from "@/assets/arrow.svg";
+import { getEvent, stripHtml } from "@/lib/events";
 import styles from "./page.module.css";
 
 function formatTimestamp(timestamp) {
@@ -19,39 +13,28 @@ function formatTimestamp(timestamp) {
     return formatISOToDDMMYYYY(date.toISOString());
 }
 
-export default function EventPage() {
-    const { id } = useParams();
-    const router = useRouter();
-    const { isAuthenticated } = useAuth();
-    const [event, setEvent] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [activeImage, setActiveImage] = useState(0);
+export async function generateMetadata({ params }) {
+    const { id } = await params;
+    const event = await getEvent(id);
+    if (!event) return {};
 
-    useEffect(() => {
-        const fetchEvent = async () => {
-            try {
-                const snap = await getDoc(doc(firestore, "events", id));
-                if (!snap.exists()) {
-                    router.replace("/events");
-                    return;
-                }
-                setEvent({ id: snap.id, ...snap.data() });
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchEvent();
-    }, [id, router]);
+    const description = stripHtml(event.description || "").slice(0, 200);
 
-    if (loading) {
-        return (
-            <PageWrapper>
-                <p className={styles.loading}>Завантаження...</p>
-            </PageWrapper>
-        );
-    }
+    return {
+        title: event.title,
+        description,
+        openGraph: {
+            title: event.title,
+            description,
+        },
+    };
+}
 
-    if (!event) return null;
+export default async function EventPage({ params }) {
+    const { id } = await params;
+    const event = await getEvent(id);
+
+    if (!event) notFound();
 
     const startDate = formatTimestamp(event.start_date);
     const endDate = formatTimestamp(event.end_date);
@@ -69,15 +52,7 @@ export default function EventPage() {
                                 {endDate && <> &mdash; {endDate}</>}
                             </span>
                         )}
-                        {isAuthenticated && (
-                            <Link
-                                href={`/events/${event.id}/edit`}
-                                className={styles.edit_link}
-                            >
-                                Редагувати
-                                <EditIcon className={styles.edit_icon} />
-                            </Link>
-                        )}
+                        <EventAdminActions eventId={event.id} />
                     </div>
                 </header>
 
@@ -99,38 +74,7 @@ export default function EventPage() {
                     dangerouslySetInnerHTML={{ __html: event.description }}
                 />
 
-                {galleryImages.length > 0 && (
-                    <div className={styles.gallery}>
-                        <div className={styles.gallery_main_wrap}>
-                            <Image
-                                src={galleryImages[activeImage]}
-                                alt={`${event.title} ${activeImage + 1}`}
-                                fill
-                                className={styles.gallery_main_image}
-                                sizes="(max-width: 768px) 100vw, 860px"
-                            />
-                        </div>
-                        {galleryImages.length > 1 && (
-                            <div className={styles.thumbnails}>
-                                {galleryImages.map((src, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => setActiveImage(i)}
-                                        className={`${styles.thumb_btn} ${i === activeImage ? styles.thumb_active : ""}`}
-                                    >
-                                        <Image
-                                            src={src}
-                                            alt={`${event.title} ${i + 1}`}
-                                            fill
-                                            className={styles.thumb_image}
-                                            sizes="100px"
-                                        />
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                )}
+                <EventGallery images={galleryImages} title={event.title} />
             </article>
         </PageWrapper>
     );

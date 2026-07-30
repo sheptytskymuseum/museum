@@ -5,7 +5,6 @@ import classes from "./header.module.css";
 import Social from "@/components/social/social";
 import Hamburger from "@/components/hamburger/hamburger";
 import Logotext from "../logotext/logotext";
-import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import LogoutIcon from "@/assets/logout.svg";
@@ -20,8 +19,10 @@ const links = [
 
 export default function Navbar() {
     const path = usePathname();
+    const isHome = path === "/";
     const { isAuthenticated, logout } = useAuth();
     const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+    const [showFullHeader, setShowFullHeader] = useState(!isHome);
 
     const handleLogout = () => {
         logout();
@@ -49,31 +50,82 @@ export default function Navbar() {
         };
     }, [isHamburgerOpen]);
 
+    useEffect(() => {
+        if (!isHome) {
+            setShowFullHeader(true);
+            return;
+        }
+
+        const hero = document.getElementById("hero");
+        if (!hero) {
+            setShowFullHeader(true);
+            return;
+        }
+
+        setShowFullHeader(false);
+
+        const observer = new IntersectionObserver(
+            ([entry]) => setShowFullHeader(!entry.isIntersecting),
+            { rootMargin: "-77px 0px 0px 0px" },
+        );
+
+        observer.observe(hero);
+
+        return () => observer.disconnect();
+    }, [isHome]);
+
+    const navLinks = (
+        <ul>
+            {links.map((link) => (
+                <li key={link.href}>
+                    <Link
+                        href={link.href}
+                        className={`${classes.link} ${
+                            link.href === path ? classes.active : ""
+                        }`}
+                    >
+                        {link.label}
+                    </Link>
+                </li>
+            ))}
+        </ul>
+    );
+
     return (
         <>
-            <header className={classes.header}>
-                <div className={`container ${classes.wrapper}`}>
-                    <Logotext isALink={!isHamburgerOpen} />
+            {isHome && (
+                <header className={classes.heroHeader}>
+                    <div
+                        className={`${classes.wrapper} ${classes.heroWrapper}`}
+                    >
+                        <nav className={`${classes.nav}`}>{navLinks}</nav>
+                        <Hamburger
+                            isOpen={isHamburgerOpen}
+                            onToggle={toggleHamburger}
+                        />
+                    </div>
+                </header>
+            )}
+
+            <header
+                className={`${classes.header} ${
+                    isHome
+                        ? `${classes.floating} ${
+                              showFullHeader ? classes.visible : ""
+                          }`
+                        : ""
+                }`}
+            >
+                <div className={classes.wrapper}>
+                    <Logotext
+                        isALink={!isHamburgerOpen}
+                        theme="dark"
+                        variant="header"
+                    />
 
                     <nav className={classes.nav}>
-                        <ul>
-                            {links.map((link) => (
-                                <li key={link.href}>
-                                    <Link href={link.href}>
-                                        {link.label}
-                                        {link.href === path && (
-                                            <motion.span
-                                                layoutId="underline"
-                                                className={
-                                                    classes.item_underline
-                                                }
-                                            />
-                                        )}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                        <Social />
+                        {navLinks}
+                        <Social theme="dark" size="sm" />
                         {isAuthenticated && (
                             <div
                                 onClick={handleLogout}

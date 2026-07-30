@@ -1,73 +1,50 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import classes from "./page.module.css";
 import PageWrapper from "@/components/page_wrapper/page_wrapper";
 import Image from "next/image";
 import formatISOToDDMMYYYY from "@/utils/formatDate";
 import ArrowIcon from "../../assets/arrow.svg";
-import { useAuth } from "@/hooks/useAuth";
-import EditIcon from "@/assets/edit.svg";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { firestore } from "@/firebase";
+import EventsAdminBar from "@/components/events_admin_bar/events_admin_bar";
+import EventEditButton from "@/components/event_edit_button/event_edit_button";
+import { collection, getDocs, orderBy, query } from "firebase/firestore/lite";
+import { firestoreServer } from "@/firebase-server";
 
-export default function Events() {
-    const { isAuthenticated } = useAuth();
-    const router = useRouter();
-    const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true);
+export const metadata = {
+    title: "Виставки та події",
+    description:
+        "Актуальні та минулі виставки й події Музею митрополита Андрея Шептицького у Львові.",
+};
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const q = query(
-                    collection(firestore, "events"),
-                    orderBy("createdAt", "desc"),
-                );
-                const snapshot = await getDocs(q);
-                const data = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setEvents(data);
-            } finally {
-                setLoading(false);
-            }
-        };
+export const revalidate = 60;
 
-        fetchEvents();
-    }, []);
+function formatTimestamp(timestamp) {
+    if (!timestamp) return null;
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    return formatISOToDDMMYYYY(date.toISOString());
+}
 
-    const formatTimestamp = (timestamp) => {
-        if (!timestamp) return null;
-        const date = timestamp.toDate
-            ? timestamp.toDate()
-            : new Date(timestamp);
-        return formatISOToDDMMYYYY(date.toISOString());
-    };
+export default async function Events() {
+    let events = [];
+    try {
+        const q = query(
+            collection(firestoreServer, "events"),
+            orderBy("createdAt", "desc"),
+        );
+        const snapshot = await getDocs(q);
+        events = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+    } catch (err) {
+        console.error("Error fetching events:", err);
+    }
 
     return (
         <PageWrapper>
             <h1>Виставки та події</h1>
-            {isAuthenticated && (
-                <div className={classes.top_info}>
-                    <p>
-                        Загальна кількість подій:{" "}
-                        <span className={classes.event_count}>
-                            {events.length}
-                        </span>
-                    </p>
-                    <Link href="/create" className={classes.create_event}>
-                        Створити подію
-                    </Link>
-                </div>
-            )}
+            <EventsAdminBar count={events.length} />
             <div className={classes.divider}></div>
-            {loading ? (
-                <p>Завантаження...</p>
-            ) : events.length === 0 ? (
+            {events.length === 0 ? (
                 <p>Подій поки немає</p>
             ) : (
                 events.map((event) => (
@@ -110,26 +87,9 @@ export default function Events() {
                                         )}
                                     </span>
                                     <div className={classes.link_wrap}>
-                                        {isAuthenticated && (
-                                            <div className={classes.edit_link}>
-                                                <button
-                                                    className={classes.edit_btn}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        router.push(
-                                                            `/events/${event.id}/edit`,
-                                                        );
-                                                    }}
-                                                >
-                                                    Редагувати
-                                                    <EditIcon
-                                                        className={
-                                                            classes.edit_icon
-                                                        }
-                                                    />
-                                                </button>
-                                            </div>
-                                        )}
+                                        <EventEditButton
+                                            eventId={event.id}
+                                        />
                                         <p>Читати більше</p>
                                         <ArrowIcon
                                             className={classes.arrow_icon}

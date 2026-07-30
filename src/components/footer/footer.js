@@ -3,43 +3,42 @@ import Logotext from "../logotext/logotext";
 import Social from "../social/social";
 import Link from "next/link";
 
-export default function Footer({}) {
+export default function Footer() {
     return (
-        <div className={classes.footer}>
-            <div className={`container`}>
-                <div className={classes.main_block}>
+        <footer className={classes.footer}>
+            <div className={classes.inner}>
+                <div className={classes.top_row}>
                     <div className={classes.info_block}>
-                        <Logotext />
-                        <div>Львів, вул. Максима Кривоноса 1, 79000</div>
-                        <div>Тел: 050 519 1371</div>
-                        <div>Email: museum.andrey@gmail.com</div>
+                        <Logotext variant="footer" />
+                        <div className={classes.address}>
+                            Львів, вул. Максима Кривоноса 1, 79000
+                            <br />
+                            050 519 1371
+                            <br />
+                            museum.andrey@gmail.com
+                        </div>
                     </div>
-                    <ul>
+                    <ul className={classes.nav_list}>
                         <li>
-                            <Link href="/events">ВИСТАВКИ ТА ПОДІЇ</Link>
+                            <Link href="/events">Виставки та події</Link>
                         </li>
                         <li>
-                            <Link href="/history">ІСТОРІЯ МУЗЕЮ</Link>
+                            <Link href="/history">Історія музею</Link>
                         </li>
                         <li>
-                            <Link href="/mission">МІСІЯ</Link>
+                            <Link href="/mission">Місія</Link>
                         </li>
                         <li>
-                            <Link href="/contacts">КОНТАКТИ</Link>
+                            <Link href="/contacts">Контакти</Link>
                         </li>
                     </ul>
-                    <div>
-                        <p className={classes.footer_text}>
-                            Продовжуємо культурно-просвітницьку місію
-                            митрополита Андрея
-                        </p>
-                        <Social />
-                    </div>
+                    <Social />
                 </div>
-                <div className={classes.bottom_block}>
-                    {new Date().getFullYear()} | &copy; All rights reserved
+                <div className={classes.bottom_row}>
+                    {new Date().getFullYear()} · Музей митрополита Андрея. Усі
+                    права захищено.
                 </div>
             </div>
-        </div>
+        </footer>
     );
 }

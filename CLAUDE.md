@@ -15,7 +15,7 @@ No test suite is configured.
 
 ## Architecture
 
-**Next.js 15 App Router** website for a Ukrainian cultural museum (Музей памʼяті митрополита Андрея).
+**Next.js 15 App Router** website for a Ukrainian cultural museum (Музей митрополита Андрея).
 
 ### Data flow
 

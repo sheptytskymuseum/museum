@@ -1,31 +1,31 @@
-.logo_text {
-    font-family: "Bebas Neue Book";
-    color: var(--light-text);
-    font-size: 22px;
-    width: 120px;
-    min-width: 120px;
-    padding: 0 8px;
-    position: relative;
-    min-height: 62px;
-    display: inline-block;
+.wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
-.logo_text:hover {
-    color: var(--white);
-    transition: color 0.3s ease-in-out;
+.logo_img {
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.logo_text {
+    font-family: "Bebas Neue Book", sans-serif;
+    font-size: 19px;
+    line-height: 1.15;
+    letter-spacing: 0.3px;
+    color: var(--light-text);
+}
+
+.logo_text.dark {
+    color: var(--dark);
+}
+
+.logo_text.footer_size {
+    font-size: 17px;
+    line-height: 1.2;
 }
 
 .logo_text_bold {
-    font-family: "Bebas Neue Bold";
-}
-
-.logo_text::before {
-    content: "";
-    position: absolute;
-    left: -5px;
-    top: 0;
-    right: 0;
-    height: 64px;
-    width: 2px;
-    background-color: var(--light-text);
+    font-family: "Bebas Neue Bold", sans-serif;
 }
