@@ -20,13 +20,13 @@ export default function Footer() {
                     </div>
                     <ul className={classes.nav_list}>
                         <li>
-                            <Link href="/events">Виставки та події</Link>
+                            <Link href="/">Головна</Link>
                         </li>
                         <li>
-                            <Link href="/history">Історія музею</Link>
+                            <Link href="/events">Актуальне</Link>
                         </li>
                         <li>
-                            <Link href="/mission">Місія</Link>
+                            <Link href="/about">Про нас</Link>
                         </li>
                         <li>
                             <Link href="/contacts">Контакти</Link>

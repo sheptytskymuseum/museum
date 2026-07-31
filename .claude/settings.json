@@ -18,7 +18,14 @@
       "Bash(node /Users/ian_shp/projects/museum/_pw_check4.js)",
       "Bash(rm -f /Users/ian_shp/projects/museum/_pw_check4.js *)",
       "Bash(node /Users/ian_shp/projects/museum/_pw_check5.js)",
-      "Bash(rm -f /Users/ian_shp/projects/museum/_pw_check5.js *)"
+      "Bash(rm -f /Users/ian_shp/projects/museum/_pw_check5.js *)",
+      "Bash(chromium-cli --help)",
+      "Bash(npx --yes playwright install chromium)",
+      "Bash(node /private/tmp/claude-501/-Users-ian-shp-projects-museum/89fc8a90-88c5-4417-9560-6c7d9d4f9e6b/scratchpad/verify_hamburger.js)",
+      "Bash(npm init *)",
+      "Bash(node verify_hamburger.js)",
+      "Bash(node debug_home2.js)",
+      "Bash(lsof -ti:3001 -sTCP:LISTEN)"
     ],
     "additionalDirectories": [
       "/tmp"

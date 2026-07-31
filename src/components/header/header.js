@@ -94,7 +94,11 @@ export default function Navbar() {
     return (
         <>
             {isHome && (
-                <header className={classes.heroHeader}>
+                <header
+                    className={`${classes.heroHeader} ${
+                        isHamburgerOpen ? classes.menuOpen : ""
+                    }`}
+                >
                     <div
                         className={`${classes.wrapper} ${classes.heroWrapper}`}
                     >
