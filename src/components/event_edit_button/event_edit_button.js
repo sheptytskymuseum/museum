@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import classes from "@/app/events/page.module.css";
+import classes from "./event_edit_button.module.css";
 import { useAuth } from "@/hooks/useAuth";
 import EditIcon from "@/assets/edit.svg";
 

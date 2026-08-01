@@ -1,0 +1,37 @@
+.gallery {
+    margin-top: 48px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.thumb_btn {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border: 2px solid transparent;
+    background: var(--light-background);
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.thumb_btn:hover {
+    border-color: var(--light-gray);
+    opacity: 0.9;
+}
+
+.thumb_image {
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+}

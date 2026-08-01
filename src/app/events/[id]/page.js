@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import PageWrapper from "@/components/page_wrapper/page_wrapper";
 import EventAdminActions from "@/components/event_admin_actions/event_admin_actions";
 import EventGallery from "@/components/event_gallery/event_gallery";
+import EventMainImage from "@/components/event_main_image/event_main_image";
+import LightboxProvider from "@/components/image_lightbox/image_lightbox_context";
 import formatISOToDDMMYYYY from "@/utils/formatDate";
 import { getEvent, stripHtml } from "@/lib/events";
 import styles from "./page.module.css";
@@ -39,42 +40,45 @@ export default async function EventPage({ params }) {
     const startDate = formatTimestamp(event.start_date);
     const endDate = formatTimestamp(event.end_date);
     const galleryImages = event.images?.length > 0 ? event.images : [];
+    const galleryStartIndex = event.main_image ? 1 : 0;
+    const lightboxImages = [
+        ...(event.main_image ? [{ src: event.main_image, alt: event.title }] : []),
+        ...galleryImages.map((src, i) => ({
+            src,
+            alt: `${event.title} — зображення ${i + 1}`,
+        })),
+    ];
 
     return (
         <PageWrapper>
             <article className={styles.article}>
-                <header className={styles.header}>
-                    <h1 className={styles.title}>{event.title}</h1>
-                    <div className={styles.meta}>
-                        {startDate && (
-                            <span className={styles.date}>
-                                {startDate}
-                                {endDate && <> &mdash; {endDate}</>}
-                            </span>
-                        )}
-                        <EventAdminActions eventId={event.id} />
-                    </div>
-                </header>
+                <LightboxProvider images={lightboxImages}>
+                    <header className={styles.header}>
+                        <h1 className={styles.title}>{event.title}</h1>
+                        <div className={styles.meta}>
+                            {startDate && (
+                                <span className={styles.date}>
+                                    {startDate}
+                                    {endDate && <> &mdash; {endDate}</>}
+                                </span>
+                            )}
+                            <EventAdminActions eventId={event.id} />
+                        </div>
+                    </header>
 
-                {event.main_image && (
-                    <div className={styles.main_image_wrap}>
-                        <Image
-                            src={event.main_image}
-                            alt={event.title}
-                            fill
-                            className={styles.main_image}
-                            sizes="(max-width: 768px) 100vw, 860px"
-                            priority
-                        />
-                    </div>
-                )}
+                    <EventMainImage src={event.main_image} alt={event.title} />
 
-                <div
-                    className={styles.description}
-                    dangerouslySetInnerHTML={{ __html: event.description }}
-                />
+                    <div
+                        className={styles.description}
+                        dangerouslySetInnerHTML={{ __html: event.description }}
+                    />
 
-                <EventGallery images={galleryImages} title={event.title} />
+                    <EventGallery
+                        images={galleryImages}
+                        title={event.title}
+                        startIndex={galleryStartIndex}
+                    />
+                </LightboxProvider>
             </article>
         </PageWrapper>
     );

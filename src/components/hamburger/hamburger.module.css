@@ -21,37 +21,25 @@
         width: 100%;
         background-color: var(--dark);
         border-radius: 3px;
+        transition: transform 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
     & > div:nth-child(2) {
         margin: 6px 0;
-        transition: transform 0.3s ease-in-out;
+        transition: opacity 0.2s ease;
     }
 }
 
 .opened {
     & > div:first-child {
-        opacity: 0;
-    }
-    & > div:nth-child(2) {
-        transform: rotate(45deg);
-        position: relative;
+        transform: translateY(10px) rotate(45deg);
     }
 
-    & > div:nth-child(2)::before {
-        content: "";
-        position: absolute;
-        background-color: var(--dark);
-        border-radius: 3px;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        transform: rotate(-90deg);
-        transition: none;
+    & > div:nth-child(2) {
+        opacity: 0;
     }
 
     & > div:nth-child(3) {
-        opacity: 0;
+        transform: translateY(-10px) rotate(-45deg);
     }
 }

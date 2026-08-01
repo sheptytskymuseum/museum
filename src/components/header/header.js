@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import LogoutIcon from "@/assets/logout.svg";
 import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 const links = [
     { href: "/", label: "ГОЛОВНА" },
@@ -102,7 +103,16 @@ export default function Navbar() {
                     <div
                         className={`${classes.wrapper} ${classes.heroWrapper}`}
                     >
-                        <nav className={`${classes.nav}`}>{navLinks}</nav>
+                        <motion.nav
+                            initial={{ opacity: 0 }}
+                            animate={{
+                                opacity: 1,
+                                transition: { duration: 0.5, delay: 0.6 },
+                            }}
+                            className={`${classes.nav}`}
+                        >
+                            {navLinks}
+                        </motion.nav>
                         <Hamburger
                             isOpen={isHamburgerOpen}
                             onToggle={toggleHamburger}
@@ -147,30 +157,40 @@ export default function Navbar() {
                 </div>
             </header>
 
-            {isHamburgerOpen && (
-                <div className={classes.modal} onClick={closeHamburger}>
-                    <div
-                        className={classes.modal_content}
-                        onClick={(e) => e.stopPropagation()}
+            <AnimatePresence>
+                {isHamburgerOpen && (
+                    <motion.div
+                        key="mobile-menu"
+                        className={classes.modal}
+                        onClick={closeHamburger}
+                        initial={{ y: "-100%" }}
+                        animate={{ y: 0 }}
+                        exit={{ y: "-100%" }}
+                        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                     >
-                        <nav className={classes.mobile_nav}>
-                            <ul>
-                                {links.map((link) => (
-                                    <li key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            onClick={closeHamburger}
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                            <Social />
-                        </nav>
-                    </div>
-                </div>
-            )}
+                        <div
+                            className={classes.modal_content}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <nav className={classes.mobile_nav}>
+                                <ul>
+                                    {links.map((link) => (
+                                        <li key={link.href}>
+                                            <Link
+                                                href={link.href}
+                                                onClick={closeHamburger}
+                                            >
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <Social />
+                            </nav>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }

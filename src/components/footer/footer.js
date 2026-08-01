@@ -32,7 +32,12 @@ export default function Footer() {
                             <Link href="/contacts">Контакти</Link>
                         </li>
                     </ul>
-                    <Social />
+                    <div>
+                        <a href="#" className={classes.donate_text}>
+                            ПІДТРИМАТИ МУЗЕЙ
+                        </a>
+                        <Social />
+                    </div>
                 </div>
                 <div className={classes.bottom_row}>
                     {new Date().getFullYear()} · Музей митрополита Андрея. Усі
