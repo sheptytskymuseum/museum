@@ -35,8 +35,3 @@
 .create_event:hover {
     background: var(--primary-hover);
 }
-
-.list {
-    display: flex;
-    flex-direction: column;
-}

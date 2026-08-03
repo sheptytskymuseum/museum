@@ -2,7 +2,13 @@ import Link from "next/link";
 import classes from "./events_preview.module.css";
 import ArrowIcon from "../../assets/arrow.svg";
 import EventRow from "@/components/event_row/event_row";
-import { collection, getDocs, orderBy, query, limit } from "firebase/firestore/lite";
+import {
+    collection,
+    getDocs,
+    orderBy,
+    query,
+    limit,
+} from "firebase/firestore/lite";
 import { firestoreServer } from "@/firebase-server";
 
 export default async function EventsPreview() {

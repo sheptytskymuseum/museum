@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from "motion/react";
 
 const links = [
     { href: "/", label: "ГОЛОВНА" },
-    { href: "/events", label: "АКТУАЛЬНЕ" },
+    { href: "/events", label: "ПОДІЇ" },
     { href: "/about", label: "ПРО НАС" },
     { href: "/contacts", label: "КОНТАКТИ" },
 ];

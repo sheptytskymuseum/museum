@@ -5,7 +5,7 @@ export const contentType = "image/png";
 
 export default async function Image() {
     return renderOgImage({
-        title: "Виставки та події",
+        title: "Події",
         subtitle: "Музей митрополита Андрея",
     });
 }

@@ -40,9 +40,12 @@ export default async function EventPage({ params }) {
     const startDate = formatTimestamp(event.start_date);
     const endDate = formatTimestamp(event.end_date);
     const galleryImages = event.images?.length > 0 ? event.images : [];
+
     const galleryStartIndex = event.main_image ? 1 : 0;
     const lightboxImages = [
-        ...(event.main_image ? [{ src: event.main_image, alt: event.title }] : []),
+        ...(event.main_image
+            ? [{ src: event.main_image, alt: event.title }]
+            : []),
         ...galleryImages.map((src, i) => ({
             src,
             alt: `${event.title} — зображення ${i + 1}`,

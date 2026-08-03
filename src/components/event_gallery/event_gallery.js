@@ -7,7 +7,7 @@ import styles from "./event_gallery.module.css";
 export default function EventGallery({ images, title, startIndex = 0 }) {
     const { open } = useImageLightbox();
 
-    if (!images || images.length <= 1) return null;
+    if (!images || images.length < 1) return null;
 
     return (
         <div className={styles.gallery}>

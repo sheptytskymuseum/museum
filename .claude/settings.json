@@ -60,10 +60,17 @@
       "Bash(lsof -i:3000 -sTCP:LISTEN)",
       "Bash(ps -p 6457 -o pid,lstart,command)",
       "Bash(kill %1)",
-      "Bash(jobs -p)"
+      "Bash(jobs -p)",
+      "Bash(echo \"checked: $?\")",
+      "Bash(xargs ls)",
+      "Bash(npx --no-install playwright install --dry-run chromium)",
+      "Bash(cp /private/tmp/claude-501/-Users-ian-shp-projects-museum/73feb4f2-b7e2-47b7-8c98-35ba9ae0e9c7/scratchpad/verify_pagination.mjs /Users/ian_shp/.npm/_npx/e41f203b7505f1fb/verify_pagination.mjs)",
+      "Bash(node /Users/ian_shp/.npm/_npx/e41f203b7505f1fb/verify_pagination.mjs)",
+      "Bash(cp /private/tmp/claude-501/-Users-ian-shp-projects-museum/73feb4f2-b7e2-47b7-8c98-35ba9ae0e9c7/scratchpad/verify_pagination.mjs /Users/ian_shp/.npm/_npx/e41f203b7505f1fb/verify_pagination.mjs *)"
     ],
     "additionalDirectories": [
-      "/tmp"
+      "/tmp",
+      "/Users/ian_shp/.npm/_npx/e41f203b7505f1fb"
     ]
   }
 }

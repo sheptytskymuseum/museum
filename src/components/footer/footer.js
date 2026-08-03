@@ -23,7 +23,7 @@ export default function Footer() {
                             <Link href="/">Головна</Link>
                         </li>
                         <li>
-                            <Link href="/events">Актуальне</Link>
+                            <Link href="/events">Події</Link>
                         </li>
                         <li>
                             <Link href="/about">Про нас</Link>
@@ -33,7 +33,12 @@ export default function Footer() {
                         </li>
                     </ul>
                     <div>
-                        <a href="#" className={classes.donate_text}>
+                        <a
+                            href="https://www.facebook.com/Sheptyckymuz/posts/pfbid031nofM3TVk1Q7sN8Pq5EnhyaY6k7skKpNfZdu1SKNQLBaPJnGgN3L8G8P5G3xdErml"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={classes.donate_text}
+                        >
                             ПІДТРИМАТИ МУЗЕЙ
                         </a>
                         <Social />
