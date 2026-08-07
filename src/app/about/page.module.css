@@ -1,36 +1,196 @@
-.article {
-    max-width: 860px;
-}
-
-.title {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 32px;
-    line-height: 1.2;
-}
-
-.content {
-    font-size: 17px;
-    line-height: 1.8;
+.sectionTitle {
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    text-transform: none;
+    letter-spacing: normal;
     color: var(--dark);
+    margin: 0 0 24px;
 }
 
-.content p {
-    margin-bottom: 16px;
+.bodyText {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--dark-gray);
+    margin: 0;
 }
 
-.content h2,
-.content h3 {
+/* ── Intro ── */
+.intro {
+    padding: 0 0 36px;
+}
+
+.introGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.leadText {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--dark-gray);
+    margin: 0;
+}
+
+.showcase {
+    padding: 0 0 80px;
+}
+
+.showcaseImage {
+    display: block;
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* ── Collection ── */
+.collectionBg {
+    background: var(--beige);
+    padding: 80px 0;
+}
+
+.collectionGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    margin-bottom: 48px;
+}
+
+.collectionImages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.collectionImage {
+    display: block;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* ── History ── */
+.history {
+    padding: 80px 0;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 56px;
+}
+
+.timelineItem {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.timelineYear {
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    font-size: 22px;
     color: var(--primary);
-    margin: 24px 0 12px;
 }
 
-.content ul,
-.content ol {
-    padding-left: 24px;
-    margin-bottom: 16px;
+/* ── Mission ── */
+.missionBg {
+    background: var(--dark);
+    padding: 80px 0;
 }
 
-.content li {
-    margin-bottom: 6px;
+.missionTitle {
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    font-size: 38px;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--light-background);
+    margin: 0 0 40px;
+}
+
+.missionGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+}
+
+.missionText {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--light-text);
+    margin: 0;
+}
+
+/* ── Exposition concept ── */
+.concept {
+    padding: 80px 0;
+}
+
+.conceptIntro {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--dark-gray);
+    max-width: 900px;
+    margin: 0 0 56px;
+}
+
+.conceptGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 40px;
+    margin-bottom: 56px;
+}
+
+.conceptItemTitle {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 18px;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--primary);
+    margin: 0 0 12px;
+}
+
+.bullet {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--primary);
+}
+
+.conceptItemDesc {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--dark-gray);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .introGrid,
+    .collectionGrid,
+    .missionGrid,
+    .conceptGrid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .collectionImages {
+        grid-template-columns: 1fr;
+    }
+
+    .timelineItem {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
 }
