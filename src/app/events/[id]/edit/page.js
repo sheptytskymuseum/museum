@@ -7,12 +7,13 @@ import { firestore } from "@/firebase";
 import { useAuth } from "@/hooks/useAuth";
 import PageWrapper from "@/components/page_wrapper/page_wrapper";
 import EventForm from "@/components/event_form/event_form";
+import LoadingSpinner from "@/components/loading_spinner/loading_spinner";
 import useEventStore from "@/store/event_store";
 
 export default function EditEventPage() {
     const { id } = useParams();
     const router = useRouter();
-    const { isAuthenticated, isAdmin } = useAuth();
+    const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -22,13 +23,14 @@ export default function EditEventPage() {
     const reset = useEventStore((state) => state.reset);
 
     useEffect(() => {
+        if (authLoading) return;
         if (!isAuthenticated || !isAdmin) {
             router.push("/login");
         }
-    }, [isAuthenticated, isAdmin, router]);
+    }, [isAuthenticated, isAdmin, authLoading, router]);
 
     useEffect(() => {
-        if (!isAuthenticated || !isAdmin) return;
+        if (authLoading || !isAuthenticated || !isAdmin) return;
 
         const fetchEvent = async () => {
             try {
@@ -71,14 +73,15 @@ export default function EditEventPage() {
         fetchEvent();
 
         return () => reset();
-    }, [id, isAuthenticated, isAdmin]);
+    }, [id, isAuthenticated, isAdmin, authLoading]);
 
+    if (authLoading) return <LoadingSpinner />;
     if (!isAuthenticated || !isAdmin) return null;
 
     if (loading) {
         return (
             <PageWrapper>
-                <p>Завантаження...</p>
+                <LoadingSpinner />
             </PageWrapper>
         );
     }

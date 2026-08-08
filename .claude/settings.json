@@ -71,7 +71,15 @@
       "Bash(python3 -c ' *)",
       "Bash(node -e ' *)",
       "Read(//Users/ian_shp/.claude/**)",
-      "Bash(find / -iname \"chromium-cli*\" -maxdepth 4)"
+      "Bash(find / -iname \"chromium-cli*\" -maxdepth 4)",
+      "Bash(lsof -i :3000 -sTCP:LISTEN -t)",
+      "Bash(ps -p 1297 -o pid,command)",
+      "Bash(find / -maxdepth 4 -iname \"*chromium-cli*\")",
+      "Bash(npx --no-install chromium-cli --help)",
+      "Bash(node verify_video.mjs)",
+      "Bash(xargs -r ps -p)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(node -e \"require.resolve\\('puppeteer'\\)\")"
     ],
     "additionalDirectories": [
       "/tmp",

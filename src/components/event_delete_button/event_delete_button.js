@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { doc, deleteDoc } from "firebase/firestore";
 import { ref, listAll, deleteObject } from "firebase/storage";
 import { firestore, storage } from "@/firebase";
@@ -9,10 +8,10 @@ import { useAuth } from "@/hooks/useAuth";
 import classes from "./event_delete_button.module.css";
 import DeleteIcon from "@/assets/delete.svg";
 
-export default function EventDeleteButton({ eventId }) {
-    const router = useRouter();
+export default function EventDeleteButton({ eventId, onDeleted }) {
     const { isAuthenticated } = useAuth();
     const [deleting, setDeleting] = useState(false);
+    const [error, setError] = useState("");
 
     if (!isAuthenticated) return null;
 
@@ -26,6 +25,7 @@ export default function EventDeleteButton({ eventId }) {
         )
             return;
 
+        setError("");
         setDeleting(true);
         try {
             const storageRef = ref(storage, `events/${eventId}`);
@@ -33,23 +33,27 @@ export default function EventDeleteButton({ eventId }) {
             await Promise.all(list.items.map((item) => deleteObject(item)));
 
             await deleteDoc(doc(firestore, "events", eventId));
-            router.refresh();
+            onDeleted?.(eventId);
         } catch (err) {
             console.error("Помилка при видаленні:", err);
+            setError("Не вдалося видалити подію. Спробуйте ще раз.");
             setDeleting(false);
         }
     };
 
     return (
-        <div className={classes.delete_link}>
-            <button
-                className={classes.delete_btn}
-                onClick={handleDelete}
-                disabled={deleting}
-            >
-                {deleting ? "Видалення..." : "Видалити"}
-                <DeleteIcon className={classes.delete_icon} />
-            </button>
+        <div className={classes.delete_wrap}>
+            <div className={classes.delete_link}>
+                <button
+                    className={classes.delete_btn}
+                    onClick={handleDelete}
+                    disabled={deleting}
+                >
+                    {deleting ? "Видалення..." : "Видалити"}
+                    <DeleteIcon className={classes.delete_icon} />
+                </button>
+            </div>
+            {error && <p className={classes.error}>{error}</p>}
         </div>
     );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     collection,
     getDocs,
@@ -15,6 +15,8 @@ import EventRow from "@/components/event_row/event_row";
 import EventEditButton from "@/components/event_edit_button/event_edit_button";
 import EventDeleteButton from "@/components/event_delete_button/event_delete_button";
 import classes from "./events_list.module.css";
+
+const DELETED_EVENT_KEY = "museum:event-deleted";
 
 function serializeEventDoc(doc) {
     const data = doc.data();
@@ -34,6 +36,31 @@ export default function EventsList({ initialEvents, initialHasMore, pageSize }) 
     const [hasMore, setHasMore] = useState(initialHasMore);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [notice, setNotice] = useState("");
+
+    useEffect(() => {
+        const raw = sessionStorage.getItem(DELETED_EVENT_KEY);
+        if (!raw) return;
+        sessionStorage.removeItem(DELETED_EVENT_KEY);
+        try {
+            const { id, message } = JSON.parse(raw);
+            setEvents((prev) => prev.filter((event) => event.id !== id));
+            setNotice(message);
+        } catch {
+            // ignore malformed payload
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!notice) return;
+        const timeout = setTimeout(() => setNotice(""), 4000);
+        return () => clearTimeout(timeout);
+    }, [notice]);
+
+    const handleDeleted = (eventId) => {
+        setEvents((prev) => prev.filter((event) => event.id !== eventId));
+        setNotice("Подію видалено.");
+    };
 
     const loadMore = async () => {
         if (loading) return;
@@ -66,6 +93,7 @@ export default function EventsList({ initialEvents, initialHasMore, pageSize }) 
 
     return (
         <>
+            {notice && <p className={classes.notice}>{notice}</p>}
             <div className={classes.list}>
                 {events.map((event, i) => (
                     <EventRow
@@ -75,7 +103,10 @@ export default function EventsList({ initialEvents, initialHasMore, pageSize }) 
                         actions={
                             <>
                                 <EventEditButton eventId={event.id} />
-                                <EventDeleteButton eventId={event.id} />
+                                <EventDeleteButton
+                                    eventId={event.id}
+                                    onDeleted={handleDeleted}
+                                />
                             </>
                         }
                         key={event.id}

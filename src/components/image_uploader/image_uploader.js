@@ -3,10 +3,12 @@
 import { useRef, useState } from "react";
 import useEventStore from "@/store/event_store";
 import { compressImage } from "@/utils/compressImage";
+import { formatBytes } from "@/utils/formatBytes";
 import styles from "./image_uploader.module.css";
 import Image from "next/image";
 
 const MAX_IMAGES = 20;
+const MAX_FILE_SIZE_BYTES = 15 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/png"];
 
 function fileToDataURL(file) {
@@ -16,11 +18,6 @@ function fileToDataURL(file) {
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
-}
-
-function formatBytes(bytes) {
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
 export default function ImageUploader({ disabled = false }) {
@@ -46,20 +43,39 @@ export default function ImageUploader({ disabled = false }) {
         }
 
         const all = Array.from(fileList);
-        const invalid = all.filter((f) => !ACCEPTED_TYPES.includes(f.type));
-        const valid = all
-            .filter((f) => ACCEPTED_TYPES.includes(f.type))
-            .slice(0, remaining);
+        const invalidType = all.filter(
+            (f) => !ACCEPTED_TYPES.includes(f.type),
+        );
+        const oversized = all.filter(
+            (f) =>
+                ACCEPTED_TYPES.includes(f.type) &&
+                f.size > MAX_FILE_SIZE_BYTES,
+        );
+        const validAll = all.filter(
+            (f) =>
+                ACCEPTED_TYPES.includes(f.type) &&
+                f.size <= MAX_FILE_SIZE_BYTES,
+        );
+        const valid = validAll.slice(0, remaining);
+        const truncated = validAll.length - valid.length;
 
-        if (invalid.length > 0 && valid.length === 0) {
-            setError("Дозволені лише PNG та JPG файли");
-            return;
-        }
-        if (invalid.length > 0) {
-            setError(
-                `${invalid.length} файл(ів) пропущено — дозволені лише PNG та JPG`,
+        const messages = [];
+        if (invalidType.length > 0) {
+            messages.push(
+                `${invalidType.length} файл(ів) пропущено — дозволені лише PNG та JPG`,
             );
         }
+        if (oversized.length > 0) {
+            messages.push(
+                `${oversized.length} файл(ів) пропущено — розмір перевищує ${formatBytes(MAX_FILE_SIZE_BYTES)}`,
+            );
+        }
+        if (truncated > 0) {
+            messages.push(
+                `${truncated} файл(ів) пропущено — досягнуто ліміту ${MAX_IMAGES} зображень`,
+            );
+        }
+        if (messages.length > 0) setError(messages.join(". "));
         if (!valid.length) return;
 
         setIsProcessing(true);
@@ -78,7 +94,8 @@ export default function ImageUploader({ disabled = false }) {
                 }),
             );
             addImages(processed);
-        } catch {
+        } catch (err) {
+            console.error("Image processing failed:", err);
             setError("Помилка при обробці зображень. Спробуйте ще раз.");
         } finally {
             setIsProcessing(false);

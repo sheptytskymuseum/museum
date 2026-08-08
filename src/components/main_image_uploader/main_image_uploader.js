@@ -3,10 +3,12 @@
 import { useRef, useState } from "react";
 import useEventStore from "@/store/event_store";
 import { compressImage } from "@/utils/compressImage";
+import { formatBytes } from "@/utils/formatBytes";
 import styles from "./main_image_uploader.module.css";
 import Image from "next/image";
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png"];
+const MAX_FILE_SIZE_BYTES = 15 * 1024 * 1024;
 
 export default function MainImageUploader({ disabled = false }) {
     const [isDragging, setIsDragging] = useState(false);
@@ -26,6 +28,12 @@ export default function MainImageUploader({ disabled = false }) {
             setError("Дозволені лише PNG та JPG файли");
             return;
         }
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+            setError(
+                `Розмір файлу перевищує ${formatBytes(MAX_FILE_SIZE_BYTES)}`,
+            );
+            return;
+        }
         setIsProcessing(true);
         try {
             const compressed = await compressImage(file);
@@ -42,7 +50,8 @@ export default function MainImageUploader({ disabled = false }) {
                 name: file.name,
                 size: compressed.size,
             });
-        } catch {
+        } catch (err) {
+            console.error("Image processing failed:", err);
             setError("Помилка при обробці зображення. Спробуйте ще раз.");
         } finally {
             setIsProcessing(false);

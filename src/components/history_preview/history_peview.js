@@ -1,6 +1,6 @@
 import classes from "./history_preview.module.css";
-import Image from "next/image";
 import Link from "next/link";
+import HistoryVideo from "./history_video";
 
 export default function HistoryPreview() {
     return (
@@ -26,13 +26,7 @@ export default function HistoryPreview() {
                     </Link>
                 </div>
             </div>
-            <Image
-                src="/images/museum2.png"
-                alt="museum-img"
-                className={classes.bottom_image}
-                width={1280}
-                height={420}
-            />
+            <HistoryVideo className={classes.bottom_image} />
         </section>
     );
 }

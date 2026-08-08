@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import {
     collection,
     doc,
@@ -19,6 +19,24 @@ import RichTextEditor from "@/components/rich_text_editor/rich_text_editor";
 import ImageUploader from "@/components/image_uploader/image_uploader";
 import MainImageUploader from "@/components/main_image_uploader/main_image_uploader";
 import useEventStore from "@/store/event_store";
+
+function getSaveErrorMessage(err, isEdit) {
+    const action = isEdit ? "оновленні" : "створенні";
+    switch (err.code) {
+        case "storage/unauthorized":
+        case "permission-denied":
+            return `Немає прав для ${action} події. Увійдіть в систему ще раз.`;
+        case "storage/canceled":
+            return "Завантаження зображень скасовано.";
+        case "storage/quota-exceeded":
+            return "Перевищено ліміт сховища. Зверніться до адміністратора.";
+        case "unavailable":
+        case "storage/retry-limit-exceeded":
+            return "Проблема з мережею. Перевірте з'єднання та спробуйте ще раз.";
+        default:
+            return `Помилка при ${action} події. Спробуйте ще раз.`;
+    }
+}
 
 export default function EventForm({
     mode = "create",
@@ -40,6 +58,7 @@ export default function EventForm({
     const [startDate, endDate] = dateRange;
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     const description = useEventStore((state) => state.description);
     const mainImage = useEventStore((state) => state.mainImage);
@@ -57,18 +76,32 @@ export default function EventForm({
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setSuccess("");
 
         const descriptionText = description.replace(/<[^>]*>/g, "").trim();
+        if (!formData.title.trim()) {
+            setError("Будь ласка, вкажіть заголовок події");
+            return;
+        }
+        if (!descriptionText) {
+            setError("Будь ласка, додайте опис події");
+            return;
+        }
+        if (!formData.start_date) {
+            setError("Будь ласка, вкажіть дату початку події");
+            return;
+        }
         if (
-            !formData.title.trim() ||
-            !descriptionText ||
-            !formData.start_date
+            formData.end_date &&
+            formData.end_date.toMillis() < formData.start_date.toMillis()
         ) {
-            setError("Будь ласка, заповніть всі обов'язкові поля");
+            setError("Дата завершення не може бути раніше дати початку");
             return;
         }
 
         setIsSubmitting(true);
+
+        const uploadedPaths = [];
 
         try {
             const targetId = isEdit
@@ -81,8 +114,10 @@ export default function EventForm({
                 if (mainImage.isExisting) {
                     mainImageUrl = mainImage.url;
                 } else {
-                    const storageRef = ref(storage, `events/${targetId}/main`);
+                    const path = `events/${targetId}/main`;
+                    const storageRef = ref(storage, path);
                     await uploadBytes(storageRef, mainImage.file);
+                    uploadedPaths.push(path);
                     mainImageUrl = await getDownloadURL(storageRef);
                 }
             }
@@ -90,11 +125,10 @@ export default function EventForm({
             const imageUrls = await Promise.all(
                 images.map(async (img) => {
                     if (img.isExisting) return img.url;
-                    const storageRef = ref(
-                        storage,
-                        `events/${targetId}/${img.id}`,
-                    );
+                    const path = `events/${targetId}/${img.id}`;
+                    const storageRef = ref(storage, path);
                     await uploadBytes(storageRef, img.file);
+                    uploadedPaths.push(path);
                     return getDownloadURL(storageRef);
                 }),
             );
@@ -114,16 +148,21 @@ export default function EventForm({
                 await setDoc(docRef, { ...data, createdAt: serverTimestamp() });
             }
 
-            reset();
-            router.push(isEdit ? `/events/${eventId}` : "/events");
+            setSuccess(isEdit ? "Подію оновлено." : "Подію створено.");
+            setTimeout(() => {
+                reset();
+                router.push(isEdit ? `/events/${eventId}` : "/events");
+            }, 900);
         } catch (err) {
-            setError(
-                isEdit
-                    ? "Помилка при оновленні події. Спробуйте ще раз."
-                    : "Помилка при створенні події. Спробуйте ще раз.",
-            );
+            if (uploadedPaths.length) {
+                await Promise.allSettled(
+                    uploadedPaths.map((path) =>
+                        deleteObject(ref(storage, path)),
+                    ),
+                );
+            }
+            setError(getSaveErrorMessage(err, isEdit));
             console.error("Error saving event:", err);
-        } finally {
             setIsSubmitting(false);
         }
     };
@@ -133,13 +172,24 @@ export default function EventForm({
         setDateRange([null, null]);
         reset();
         setError("");
+        setSuccess("");
     };
 
     const isDescriptionEmpty = !description.replace(/<[^>]*>/g, "").trim();
+    const isEndBeforeStart =
+        formData.end_date &&
+        formData.start_date &&
+        formData.end_date.toMillis() < formData.start_date.toMillis();
+    const isFormValid =
+        !!formData.title.trim() &&
+        !isDescriptionEmpty &&
+        !!formData.start_date &&
+        !isEndBeforeStart;
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             {error && <div className={styles.errorMessage}>{error}</div>}
+            {success && <div className={styles.successMessage}>{success}</div>}
 
             <div className={styles.form_group}>
                 <label htmlFor="title" className={styles.label}>
@@ -214,12 +264,7 @@ export default function EventForm({
                 <button
                     type="submit"
                     className={styles.submitButton}
-                    disabled={
-                        isSubmitting ||
-                        !formData.title.trim() ||
-                        isDescriptionEmpty ||
-                        !formData.start_date
-                    }
+                    disabled={isSubmitting || !isFormValid}
                 >
                     {isSubmitting
                         ? isEdit
