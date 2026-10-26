@@ -117,7 +117,9 @@ export default function EventForm({
         if (mainImage.isExisting) {
           mainImageUrl = mainImage.url;
         } else {
-          const path = `events/${targetId}/main`;
+          // Унікальне ім'я: новий файл не перезаписує поточне головне зображення,
+          // тож відкат при помилці видаляє лише щойно завантажений файл
+          const path = `events/${targetId}/main-${mainImage.id}`;
           const storageRef = ref(storage, path);
           await uploadBytes(storageRef, mainImage.file);
           uploadedPaths.push(path);
