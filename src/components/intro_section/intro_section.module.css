@@ -1,77 +1,78 @@
 .main_wrap {
-    display: flex;
-    align-items: center;
-    margin-bottom: 148px;
-    min-height: 80vh;
+  display: flex;
+  align-items: center;
+  margin-bottom: 148px;
+  min-height: 80vh;
 }
 
 .logo {
-    width: 270px;
-    height: 270px;
+  width: 270px;
+  height: 270px;
 }
 
 .logo_wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    max-width: 600px;
-    margin-top: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  max-width: 600px;
+  margin-top: 68px;
 
-    h1 {
-        font-family: "Bebas Neue Book", sans-serif;
-        width: 280px;
-        font-size: 56px;
-        margin-top: 89px;
-        margin-left: 34px;
-        position: relative;
-        color: var(--dark-gray);
-    }
+  h1 {
+    font-family: "Bebas Neue Book", sans-serif;
+    width: 280px;
+    font-size: 56px;
+    line-height: 1;
+    margin-top: 89px;
+    margin-left: 34px;
+    position: relative;
+    color: var(--dark-gray);
+  }
 
-    h1::before {
-        content: "";
-        background-color: var(--dark-gray);
-        position: absolute;
-        width: 3px;
-        height: 155px;
-        top: 0;
-        left: -19px;
-    }
+  h1::before {
+    content: "";
+    background-color: var(--dark-gray);
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0.25em;
+    left: -19px;
+  }
 
-    span {
-        font-family: "Bebas Neue Bold", sans-serif;
-    }
+  span {
+    font-family: "Bebas Neue Bold", sans-serif;
+  }
 }
 
 @media (max-width: 1279px) {
-    .logo_wrap {
-        margin: 46px auto;
-        width: 100%;
-    }
+  .logo_wrap {
+    margin: 46px auto;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-    .main_wrap {
-        margin-bottom: 0;
-    }
+  .main_wrap {
+    margin-bottom: 0;
+  }
 
-    .logo {
-        width: 188px;
-        height: 188px;
-    }
+  .logo {
+    width: 188px;
+    height: 188px;
+  }
 
-    .logo_wrap {
-        margin: 16px auto;
-        flex-direction: column;
-    }
+  .logo_wrap {
+    margin: 16px auto;
+    flex-direction: column;
+  }
 
-    .logo_wrap > h1 {
-        font-size: 38px;
-        width: 186px;
-        margin-top: 32px;
-    }
+  .logo_wrap > h1 {
+    font-size: 38px;
+    width: 186px;
+    margin-top: 32px;
+  }
 
-    .logo_wrap > h1::before {
-        display: none;
-    }
+  .logo_wrap > h1::before {
+    display: none;
+  }
 }
