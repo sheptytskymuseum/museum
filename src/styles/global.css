@@ -1,68 +1,62 @@
 @import "./variables.css";
 
 @font-face {
-    font-family: "Bebas Neue Book";
-    src: url("../../public/fonts/BebasNeue-Book.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Bebas Neue Book";
+  src: url("../../public/fonts/BebasNeue-Book.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: "Bebas Neue Bold";
-    src: url("../../public/fonts/BebasNeue-Bold.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Bebas Neue Bold";
+  src: url("../../public/fonts/BebasNeue-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: var(--light-background);
-    font-family: "Nunito", sans-serif;
+  background-color: var(--light-background);
+  font-family: "Nunito", sans-serif;
 }
 
 main {
-    min-height: 70vh;
+  min-height: 70vh;
 }
 
 h1 {
-    text-transform: uppercase;
-    position: relative;
-    margin: 36px 0;
-    color: var(--dark);
-    font-family: "Oswald", sans-serif;
-    font-size: 36px;
+  text-transform: uppercase;
+  position: relative;
+  margin: 36px 0;
+  color: var(--dark);
+  font-family: "Oswald", sans-serif;
+  font-size: 36px;
 }
 
 h2 {
-    font-size: 28px;
-    font-weight: 400;
-    margin: 16px 0;
-    text-transform: uppercase;
-    color: var(--dark-gray);
+  font-size: 28px;
+  font-weight: 400;
+  margin: 16px 0;
+  text-transform: uppercase;
+  color: var(--dark-gray);
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 p {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .container {
-    margin: 0 auto;
-    max-width: 1220px;
-    padding-left: 16px;
-    padding-right: 16px;
-}
-
-.full-bleed {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+  margin: 0 auto;
+  max-width: 1220px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
